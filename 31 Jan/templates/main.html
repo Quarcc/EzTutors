@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+{% block title %}EzTutors{% endblock %}
+
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="row g-0">
+    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 g-0">
+        <div class="leftside">
+            <div class="container">
+                <img src="{{ url_for('static', filename='images/eztutorlogo4.png') }}" class="rounded-circle shadow" alt="" id="logo">
+                <div class="row content d-flex justify-content-center align-items-center g-0">
+                    <div class="col-sm-10 col-lg-8">
+                        <div class="box shadow p-4" id="login-select-bg">
+                            <h1 class="my-4 text-center fs-1 login-label">EZ-TUTOR</h1>
+                            <h1 class="mb-5 text-center fs-4">Login Selection</h1>
+                            <div class="row justify-content-center mb-5">
+                                <a href="/studentlogin" class="col-lg-4 col-sm-8 btn btn-secondary d-flex align-items-center justify-content-center button-select">Student</a>
+                                <div class="col-lg-2 mb-5"></div>
+                                <a href="/tutorlogin" class="col-lg-4 col-sm-8 btn btn-secondary d-flex align-items-center justify-content-center button-select">Tutor</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-xl-6 col-lg-12 col-md-12 col-sm-12 g-0">
+        <div class="rightside">
+            <div class="container">
+                <div class="row content d-flex justify-content-center align-items-center g-0">
+                    <div class="col-sm-10">
+                        <div class="p-4" id="leaderboard">
+                            <h1 class="my-5 text-center fs-1">&#128081;LEADERBOARD&#128081;</h1>
+                            <ul class="text-center mb-5 fs-5" id="leader-navbar">
+                                <li><a href="">English</a></li>
+                                <li>|</li>
+                                <li><a href="">Math</a></li>
+                                <li>|</li>
+                                <li><a href="">Science</a></li>
+                            </ul>
+                            <div class="box shadow p-4" id="leaderboard-bg">
+                                <ul class="text-center" id="leader-list">
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                    <li></li>
+                                    <hr>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
