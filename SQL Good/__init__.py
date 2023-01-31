@@ -95,7 +95,7 @@ def before_request():
         g.user = session['user']
 
 
-@app.route('/main')
+@app.route('/')
 def main():
     return render_template('main.html')
 
@@ -160,7 +160,7 @@ def admin_main():
     return render_template('adminMain.html')
 
 
-@app.route('/', methods=['GET', 'POST'])
+@app.route('/createstudent', methods=['GET', 'POST'])
 def create_student_account():
     create_student_form = CreateStudentAccount(request.form)
     if request.method == 'POST' and create_student_form.validate():
