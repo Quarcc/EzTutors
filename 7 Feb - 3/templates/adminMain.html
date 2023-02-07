@@ -1,0 +1,30 @@
+{% extends "base.html" %}
+{% block title %}EzTutors{% endblock %}
+{% block navbar %}
+{% include 'includes/_navbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/main.css') }}">
+{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row g-0">
+        <div class="col-lg-6">
+            <div class="test1">
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="col-lg-4">
+              <div class="test2">
+                bye bye
+              </div>
+            </div>
+            <div class="col-lg-4">
+              <div class="test3">
+                bye bye
+              </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

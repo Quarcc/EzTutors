@@ -1,0 +1,262 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Tutor Accounts{% endblock %}
+{% block navbar %}
+{% include 'includes/_navbar.html' %}
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<h1 class="display-4">Retrieve Tutor Account</h1>
+<div>
+    {% if count == 0 %}
+    <p>There are no recorded tutor accounts</p>
+    {% elif count == 1 %}
+    <p>There is 1 tutor account</p>
+    {% else %}
+    <p>There are {{ count }} tutor accounts</p>
+    {% endif %}
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Tutor ID</th>
+                <th>First Name</th>
+                <th>Last Name</th>
+                <th>Password</th>
+                <th>Age</th>
+                <th>Email</th>
+                <th>Mobile</th>
+                <th>Tutor Teaching Level</th>
+                <th>Tutoring Class(es)</th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for tutor in tutor %}
+            <tr>
+                <td>{{ tutor.tutor_id_num }}</td>
+                <td>{{ tutor.tutor_first_name }}</td>
+                <td>{{ tutor.tutor_last_name }}</td>
+                <td>{{ tutor.tutor_password }}</td>
+                <td>{{ tutor.tutor_age }}</td>
+                <td>{{ tutor.tutor_email }}</td>
+                <td>{{ tutor.tutor_mobile }}</td>
+                <td>{{ tutor_teaching }}</td>
+                <td>{{ tutor_classes }}</td>
+                <td>
+                <form action="{{url_for('update_tutor_account', tutor_id_num=tutor.tutor_id_num)}}" method="POST">
+<!--                <input type="submit" value="Delete" class="btn btn-danger">-->
+                    <!-- Button to Open the Modal -->
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editModal_{{tutor.tutor_id_num}}">
+                      Update
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal" id="editModal_{{tutor.tutor_id_num}}">
+                        <div class="modal-dialog">
+
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Update {{tutor.tutor_id_num}}'s Tutor Information</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    <div class="form-group">
+                                        <label>Identification Number</label>
+                                        <input type="text" class="form-control" name="tutor_id_num" value="{{tutor.tutor_id_num}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>First Name</label>
+                                        <input type="text" class="form-control" name="tutor_first_name" value="{{tutor.tutor_first_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Last Name</label>
+                                        <input type="text" class="form-control" name="tutor_last_name" value="{{tutor.tutor_last_name}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Password</label>
+                                        <input type="text" class="form-control" name="tutor_password" value="{{tutor.tutor_password}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Age</label>
+                                        <input type="text" class="form-control" name="tutor_age" value="{{tutor.tutor_age}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Mobile Number</label>
+                                        <input type="text" class="form-control" name="tutor_mobile" value="{{tutor.tutor_mobile}}">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Email Address</label>
+                                        <input type="text" class="form-control" name="tutor_email" value="{{tutor.tutor_email}}">
+                                    </div>
+                                     <div class="form-group">
+                                        <label for="tutor_teaching_level">Subjects Enrolled</label>
+                                        <ul class="form-check" id="tutor_teaching_level" style="list-style: none;">
+                                            {% if "P1" is in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P1" checked>
+                                                <label>Primary 1</label>
+                                            </li>
+                                            {% elif "P1" not in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P1">
+                                                <label>Primary 1</label>
+                                            </li>
+                                            {% endif %}
+                                            {% if "P2" is in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P2" checked>
+                                                <label>Primary 2</label>
+                                            </li>
+                                            {% elif "P2" not in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P2">
+                                                <label>Primary 2</label>
+                                            </li>
+                                            {% endif %}
+                                            {% if "P3" is in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P3" checked>
+                                                <label>Primary 3</label>
+                                            </li>
+                                            {% elif "P3" not in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P3">
+                                                <label>Primary 3</label>
+                                            </li>
+                                            {% endif %}
+                                            {% if "P4" is in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P4" checked>
+                                                <label>Primary 4</label>
+                                            </li>
+                                            {% elif "P4" not in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P4">
+                                                <label>Primary 4</label>
+                                            </li>
+                                            {% endif %}
+                                            {% if "P5" is in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P5" checked>
+                                                <label>Primary 5</label>
+                                            </li>
+                                            {% elif "P5" not in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P5">
+                                                <label>Primary 5</label>
+                                            </li>
+                                            {% endif %}
+                                            {% if "P6" is in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P6" checked>
+                                                <label>Primary 6</label>
+                                            </li>
+                                            {% elif "P6" not in tutor_teaching_level %}
+                                            <li>
+                                                <input name="tutor_teaching_level" style="list-style: none;" type="checkbox" value="P6">
+                                                <label>Primary 6</label>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="tutor_class">Subjects Enrolled</label>
+                                        <ul class="form-check" id="tutor_class" style="list-style: none;">
+                                            {% if "ENG" is in tutor_class_list %}
+                                            <li>
+                                                <input name="tutor_class" style="list-style: none;" type="checkbox" value="ENG" checked>
+                                                <label>English</label>
+                                            </li>
+                                            {% elif "ENG" not in tutor_class_list %}
+                                            <li>
+                                                <input name="tutor_class" style="list-style: none;" type="checkbox" value="ENG">
+                                                <label>English</label>
+                                            </li>
+                                            {% endif %}
+                                            {% if "MATH" is in tutor_class_list %}
+                                            <li>
+                                                <input name="tutor_class" style="list-style: none;" type="checkbox" value="MATH" checked>
+                                                <label>Mathematics</label>
+                                            </li>
+                                            {% elif "MATH" not in tutor_class_list %}
+                                            <li>
+                                                <input name="tutor_class" style="list-style: none;" type="checkbox" value="MATH">
+                                                <label>Mathematics</label>
+                                            </li>
+                                            {% endif %}
+                                            {% if "SCI" is in tutor_class_list %}
+                                            <li>
+                                                <input name="tutor_class" style="list-style: none;" type="checkbox" value="SCI" checked>
+                                                <label>Science</label>
+                                            </li>
+                                            {% elif "SCI" not in tutor_class_list %}
+                                            <li>
+                                                <input name="tutor_class" style="list-style: none;" type="checkbox" value="SCI">
+                                                <label>Science</label>
+                                            </li>
+                                            {% endif %}
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <input type="submit" value="Update" class="btn btn-primary">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </td>
+                <td>
+                    <form action="{{url_for('delete_tutor_account', tutor_id_num=tutor.tutor_id_num)}}" method="POST">
+<!--                <input type="submit" value="Delete" class="btn btn-danger">-->
+                    <!-- Button to Open the Modal -->
+                    <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#myModal_{{tutor.tutor_id_num}}">
+                      Delete
+                    </button>
+
+                    <!-- The Modal -->
+                    <div class="modal" id="myModal_{{tutor.tutor_id_num}}">
+                        <div class="modal-dialog">
+
+                            <div class="modal-content">
+
+                                <!-- Modal Header -->
+                                <div class="modal-header">
+                                    <h4 class="modal-title">Delete Confirmation</h4>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                </div>
+
+                                <!-- Modal body -->
+                                <div class="modal-body">
+                                    Are you sure you want to delete {{tutor.tutor_first_name}} {{tutor.tutor_last_name}}'s Account?
+                                </div>
+
+                                <!-- Modal footer -->
+                                <div class="modal-footer">
+                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                </td>
+                <td>
+                    <a href="/dropsession" class="btn btn-warning">Logout</a>
+                </td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock %}
