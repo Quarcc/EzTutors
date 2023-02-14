@@ -1,0 +1,101 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "How are you",
+        "Is anyone there?",
+        "Hello",
+        "Good day"
+      ],
+      "responses": [
+        "Hey :-)",
+        "Hello, thanks for visiting",
+        "Hi there, what can I do for you?",
+        "Hi there, how can I help?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye"],
+      "responses": [
+        "See you later, thanks for visiting",
+        "Have a nice day",
+        "Bye! Come back again soon."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": ["Thanks", "Thank you", "That's helpful", "Thank's a lot!"],
+      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+    },
+    {
+      "tag": "others",
+      "patterns": [
+        "Notification",
+        "notification",
+        "Notifications",
+        "notifications"
+      ],
+      "responses": [
+        "Please go to home > notification; we will response to you during 1-2 working days!",
+        "Click on the notification on the navigation bar. We will get back to you in 1-2 working days!"
+      ]
+    },
+
+    {
+      "tag": "funny",
+      "patterns": [
+        "Tell me a joke!",
+        "Tell me something funny!",
+        "Do you know a joke?"
+      ],
+      "responses": [
+        "Why did the hipster burn his mouth? He drank the coffee before it was cool.",
+        "What did the buffalo say when his son left for college? Bison."
+      ]
+    },
+
+    {
+      "tag": "question",
+      "patterns": [
+        "Help me",
+        "Help",
+        "help"
+      ],
+      "responses": [
+        "Hi there! How can I help you? What kind of issue did you faced?(Homework/System Error/Notification)?",
+        "Yes we are here to help. Type 'homework' or 'system error' or 'Notification' for more assistance ."
+      ]
+    },
+    {
+      "tag": "work",
+      "patterns": [
+        "homework",
+        "Homework",
+        "HomeWork"
+      ],
+      "responses": [
+        "Please go to home > main > content to access your home.",
+        "Click on the navigation bar on main to go to main section."
+      ]
+    },
+    {
+      "tag": "working",
+      "patterns": [
+        "System Error",
+        "system error",
+        "System Error",
+        "systemerror",
+        "SystemError",
+        "Systemerror"
+      ],
+      "responses": [
+        "We are currently unable to resolve this issue, please go the feedback section to tell us more!",
+        "Please go to the feedback section to specific with us about the issue."
+      ]
+    }
+  ]
+}

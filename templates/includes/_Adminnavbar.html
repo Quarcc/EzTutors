@@ -1,0 +1,38 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+<nav class="navbar navbar-expand-xl bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" id="navbarlogo">
+      <img src="{{ url_for('static', filename='images/eztutorlogo4.png') }}" class="rounded-circle shadow navlogo" alt="">
+      E Z - T U T O R S
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ms-auto me-2">
+        <li class="nav-item">
+          <a class="nav-link Tnavbar" href="/adminMain">Main</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link Tnavbar" href="/adminAccounts">Accounts</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link Tnavbar" href="/adminAnnouncement">Announcements</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link Tnavbar" href="/adminNotifications">Notifications</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown" id="username" role="button" data-bs-toggle="dropdown" href="#">
+            |
+            <img src="{{ url_for('static', filename='profile_pics/admin.png') }}" class="shadow userlogo">
+            Jabe Ez
+          </a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/dropsession">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

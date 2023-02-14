@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Tutor Create Content{% endblock %}
+{% block navbar %}
+{% include 'includes/_Tnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/content.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex justify-content-center mt-5 ctest">
+    <div class="col-lg-8">
+        <div class="ccontent-bg px-5 py-3 mx-5">
+            <div>
+                <form method="POST" action="" enctype="multipart/form-data">
+                    <h1 class="display-4 pt-2 ccontent-title">Create Content</h1>
+                    <div class="form-group ccontent-name">
+                        {{ render_field(form.cname, class="form-control") }}
+                    </div>
+                    <div class="form-group ccontent-sub">
+                        {{ render_field(form.content_subject, class="form-control ctsb-data") }}
+                    </div>
+                    <div class="form-group">
+                        <label>Upload Files</label>
+                        <br/>
+                        <input type="file" name="contentfile" accept=".pdf">
+                    </div>
+                    <div class="row g-0">
+                        <div class="col-lg-6">
+                        </div>
+                        <div class="col-lg-6 d-flex justify-content-end align-items-center">
+                            <input type="submit" value="Submit" class="btn btn-primary mt-3"/>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{% endblock %}

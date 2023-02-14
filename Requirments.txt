@@ -1,0 +1,19 @@
+# ---------- Requirements ----------
+
+pip install flask
+pip install flask-sqlalchemy
+pip install flask-socketio
+pip install flask-session
+pip install flask-wtf
+pip install wtforms
+pip install wtforms-validators
+
+# ---------- Chat Bot ----------
+
+pip install Flask torch torchvision nltk
+
+If you want to change the content of the chatbot go to the intents.json file to motify
+once you modify remove the data.pth, and run train.py first before runing the __init__.py
+
+
+

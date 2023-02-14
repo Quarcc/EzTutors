@@ -1,0 +1,120 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Tutor Notifications{% endblock %}
+{% block navbar %}
+{% include 'includes/_Tnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tutornotification.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex justify-content-center mt-5">
+  <div class="col-lg-8">
+    <div class="cnotif-bg px-5 py-3">
+      <form method="POST" action="" class="px-5 mx-3 py-3 ">
+        <h1 class="display-4 cnotif-title">Create Notifications</h1>
+        <div class="form-group">
+          {{ render_field(form.target_user, class="form-control") }}
+        </div>
+        <div class="form-group mt-3">
+          {{ render_field(form.title, class="form-control") }}
+        </div>
+        <div class="form-group mt-3">
+          {{ render_field(form.description, class="form-control") }}
+        </div>
+        <div class="row g-0">
+          <div class="col-lg-6">
+          </div>
+          <div class="col-lg-6 d-flex justify-content-end align-items-center mt-3">
+            <input type="submit" value="Submit" class="btn btn-primary"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="rnotif">
+      <div class="container-fluid px-5 py-3 rnotif-bg">
+        <br/>
+        <h2>My Notifications</h2>
+        <br/>
+        <div>
+          {% if count == 0 %}
+          <p>You have not sent any notifications</p>
+          {% elif count == 1 %}
+          <p>You have sent 1 notification</p>
+          {% else %}
+          <p>You have sent {{ count }} notifications</p>
+          {% endif %}
+        </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Target User</th>
+            <th>Upload Date</th>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Edit</th>
+            <th>Delete</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for notif in notification_list %}
+          <tr>
+            <td>{{ notif.get_target_user() }}</td>
+            <td>{{ notif.get_upload_date() }}</td>
+            <td>{{ notif.get_title() }}</td>
+            <td>{{ notif.get_description() }}</td>
+            <td>
+              <a href="/updateTutorNotification/{{notif.get_notif_id()}}" class="btn">
+                <i class="bi bi-pencil-square update-btn"></i>
+              </a>
+            </td>
+            <td>
+              <form action="{{url_for('delete_notification', notif_id=notif.get_notif_id())}}" method="POST">
+                <!--                <input type="submit" value="Delete" class="btn btn-danger">-->
+                <!-- Button to Open the Modal -->
+                <a type="button" class="btn" data-bs-toggle="modal"
+                   data-bs-target="#myModal_{{notif.get_notif_id()}}">
+                  <i class="bi bi-trash3-fill delete-btn"></i>
+                </a>
+
+                <!-- The Modal -->
+                <div class="modal" id="myModal_{{notif.get_notif_id()}}">
+                  <div class="modal-dialog">
+
+                    <div class="modal-content">
+
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title">Delete Confirmation</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        Are you sure you want to delete notification about {{notif.get_title()}}
+                      </div>
+
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                          Cancel
+                        </button>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+{% endblock %}

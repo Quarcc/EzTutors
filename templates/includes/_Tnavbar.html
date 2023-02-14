@@ -1,0 +1,42 @@
+<link rel="stylesheet" href="{{ url_for('static', filename='css/navbar.css') }}">
+<nav class="navbar navbar-expand-xl bg-dark navbar-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="#" id="navbarlogo">
+      <img src="{{ url_for('static', filename='images/eztutorlogo4.png') }}" class="rounded-circle shadow navlogo" alt="">
+      E Z - T U T O R S
+    </a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="collapsibleNavbar">
+      <ul class="navbar-nav ms-auto me-2">
+        <li class="nav-item dropdown d-flex align-items-center">
+          <a class="nav-link dropdown Tnavbar" href="#" role="button" data-bs-toggle="dropdown">Content</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/TutorRetrieveContent">Main</a></li>
+            <li><a class="dropdown-item" href="/createTest">Create Test</a></li>
+            <li><a class="dropdown-item" href="/createContent">Create Content</a></li>
+          </ul>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link Tnavbar" href="/tutorFeedback">Feedback</a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link Tnavbar" href="/tutorNotification">Notifications</a>
+        </li>
+        <li class="nav-item d-flex align-items-center">
+          <a class="nav-link Tnavbar" href="/tutorAnnouncement">Announcements</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown Tnavbar" href="#" role="button" data-bs-toggle="dropdown">|
+            <img src="{{ url_for('static', filename='profile_pics/'+tutor_profile_img) }}" class="shadow userlogo">
+            {{tutor_profile_name}}</a>
+          <ul class="dropdown-menu">
+            <li><a class="dropdown-item" href="/">Edit Profile</a></li>
+            <li><a class="dropdown-item" href="/dropsession">Logout</a></li>
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</nav>

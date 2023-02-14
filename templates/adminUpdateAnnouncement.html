@@ -1,0 +1,270 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Admin Update Announcements{% endblock %}
+{% block navbar %}
+{% include 'includes/_Adminnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/adminannounce.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-lg-8">
+        <div class="form-bg">
+            <form method="POST" action="" enctype="multipart/form-data" class="px-5 mx-3 py-3">
+                <h1 class="display-4">Update Announcement</h1>
+                <div class="form-group">
+                    {{ render_field(form.atitle, class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.acontent, class="form-control") }}
+                </div>
+                <div class="form-group">
+                    {{ render_field(form.afiles, class="form-control") }}
+                </div>
+                <div class="row g-0">
+                    <div class="col-lg-6">
+                    </div>
+                    <div class="col-lg-6 d-flex justify-content-end align-items-center">
+                        <a href="/adminAnnouncement"><input type="button" class="btn btn-secondary mt-3"
+                                                            value="Cancel"/></a>
+                        <input type="submit" value="Update" class="btn btn-primary ms-3 mt-3"/>
+                    </div>
+                </div>
+            </form>
+        </div>
+        <div class="mt-5">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active weird-nav-link" data-bs-toggle="tab" href="#MyAnn">My Announcements</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link weird-nav-link" data-bs-toggle="tab" href="#TutorAnn">Tutor Announcements</a>
+                </li>
+            </ul>
+            <div class="tab-content weird-nav">
+                <div class="tab-pane container-fluid active px-5" id="MyAnn">
+                    <br>
+                    <h2>My Announcements</h2>
+                    <br>
+                    <div>
+                        {% if count_admin == 0 %}
+                        <p>There are no announcements from you</p>
+                        {% elif count_admin == 1 %}
+                        <p>There is 1 announcement from you</p>
+                        {% else %}
+                        <p>There are {{ count_admin }} announcements from you</p>
+                        {% endif %}
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Announcement Title</th>
+                            <th>Announcement Description</th>
+                            <th>Upload Date</th>
+                            <th>Updated Date</th>
+                            <th>Files</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if count_admin != 0 %}
+                        {% for i in admin_ann_list %}
+                        <tr>
+                            <td>{{ i.get_title() }}</td>
+                            <td>{{ i.get_content() }}</td>
+                            <td>{{ i.get_date() }}</td>
+                            <td>{{ i.get_update() }}</td>
+                            <td>
+                                {% for key, value in file_dict.items() %}
+                                {% if key == i.get_ann_id() and value != '' %}
+                                <div class="btn download">
+                                    <a href="{{url_for('download_file', name=value)}}" class="download" target="+blank"
+                                       rel="noreferrer noopener">Download</a>
+                                </div>
+                                {% elif key == i.get_ann_id() and value == '' %}
+                                <p>None</p>
+                                {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <a href="/updateAdminAnnouncement/{{i.get_ann_id()}}" class="btn edit-button">
+                                    <i class="bi bi-pencil-square edit-button"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <form action="{{url_for('a_delete_announcement', ann_id=i.get_ann_id())}}" method="POST">
+                                    <!-- Button to Open the Modal -->
+                                    <a type="button" class="btn delete-button" data-bs-toggle="modal"
+                                       data-bs-target="#myModal_{{i.get_ann_id()}}">
+                                        <i class="bi bi-trash3-fill delete-button"></i>
+                                    </a>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="myModal_{{i.get_ann_id()}}">
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Confirmation</h4>
+                                                    <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete Announcement:<br>
+                                                    <h5>{{i.get_title()}}</h5>
+                                                    {% for key, value in user_dict.items() %}
+                                                    {% if key == i.get_id_num() %}
+                                                    <p> by {{ value }}</p>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane container-fade px-5" id="TutorAnn">
+                    <br>
+                    <h2>Tutor Announcements</h2>
+                    <br>
+                    <div>
+                        {% if count_tutor == 0 %}
+                        <p>There are no announcements from Tutors</p>
+                        {% elif count_tutor == 1 %}
+                        <p>There is 1 announcement from Tutors</p>
+                        {% else %}
+                        <p>There are {{ count_tutor }} announcements from Tutors</p>
+                        {% endif %}
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Announcement Title</th>
+                            <th>Announcement Description</th>
+                            <th>Upload Date</th>
+                            <th>Updated Date</th>
+                            <th>Files</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if count_tutor != 0 %}
+                        {% for i in tutor_ann_list %}
+                        <tr>
+                            {% for key, value in user_dict.items() %}
+                            {% if key == i.get_id_num() %}
+                            <td>{{ value }}</td>
+                            {% endif %}
+                            {% endfor %}
+                            <td>{{ i.get_title() }}</td>
+                            <td>{{ i.get_content() }}</td>
+                            <td>{{ i.get_date() }}</td>
+                            <td>{{ i.get_update() }}</td>
+                            <td>
+                                {% for key, value in file_dict.items() %}
+                                {% if key == i.get_ann_id() and value != '' %}
+                                <div class="btn download">
+                                    <a href="{{url_for('download_file', name=value)}}" class="download" target="+blank"
+                                       rel="noreferrer noopener">Download</a>
+                                </div>
+                                {% elif key == i.get_ann_id() and value == '' %}
+                                <p>None</p>
+                                {% endif %}
+                                {% endfor %}
+                            </td>
+                            <td>
+                                <form action="{{url_for('a_delete_announcement', ann_id=i.get_ann_id())}}" method="POST">
+                                    <!-- Button to Open the Modal -->
+                                    <a type="button" class="btn delete-button" data-bs-toggle="modal"
+                                       data-bs-target="#tutormyModal_{{i.get_ann_id()}}">
+                                        <i class="bi bi-trash3-fill delete-button"></i>
+                                    </a>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="tutormyModal_{{i.get_ann_id()}}">
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Confirmation</h4>
+                                                    <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete Announcement:<br>
+                                                    <h5>{{i.get_title()}}</h5>
+                                                    {% for key, value in user_dict.items() %}
+                                                    {% if key == i.get_id_num() %}
+                                                    <p> by {{ value }}</p>
+                                                    {% endif %}
+                                                    {% endfor %}
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancel
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

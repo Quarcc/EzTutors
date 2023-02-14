@@ -1,0 +1,102 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Student Feedback{% endblock %}
+{% block navbar %}
+{% include 'includes/_Snavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex justify-content-center mt-5">
+  <div class="col-lg-8">
+    <div class="feedback-bg px-5 py-3">
+      <form method="POST" action="" enctype="multipart/form-data" class="px-5 mx-3 py-3">
+        <h1 class="display-4 feedback-title">Create Feedbacks</h1>
+        <div class="form-group subject-field">
+          {{ render_field(form.feedback_subject, class="form-control sf-data") }}
+        </div>
+        <div class="form-group title-field">
+          {{ render_field(form.feedback_title, class="form-control tf-data") }}
+        </div>
+        <div id="prof">
+          <div class="form-group">
+            {{ render_field(form.feedback_description, class="form-control descf-data") }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label>Upload Files (Optional)</label>
+          <br/>
+          <input type="file" name="file2" accept="image/*">
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="row g-0">
+          <div class="col-lg-6">
+          </div>
+          <div class="col-lg-6 d-flex justify-content-end align-items-center">
+            <input type="submit" value="Submit" class="btn btn-primary mt-3"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="weird-nav mt-5">
+      <div class="container-fluid px-5 py-3 rfb-bg">
+        <br/>
+        <h2>My Feedbacks</h2>
+        <br/>
+        <div>
+          {% if count == 0 %}
+          <p>There are no recorded feedback</p>
+          {% elif count == 1 %}
+          <p>There is 1 feedback</p>
+          {% else %}
+          <p>There are {{ count }} feedbacks</p>
+          {% endif %}
+        </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Feedback Date</th>
+            <th>Feedback Name</th>
+            <th>Admin ID</th>
+            <th>Feedback Subject</th>
+            <th>Feedback Title</th>
+            <th>Feedback Description</th>
+            <th>Attachments</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for feedback in feedback_list %}
+          <tr>
+            <td>{{ feedback.get_feedback_date() }}</td>
+            <td>{{ feedback.get_feedback_name() }}</td>
+            <td>{{ feedback.get_feedback_adminid() }}</td>
+            <td>{{ feedback.get_feedback_subject() }}</td>
+            <td>{{ feedback.get_feedback_title() }}</td>
+            <td>{{ feedback.get_feedback_description() }}</td>
+            <td>
+              {% for key, value in file_dict.items() %}
+                {% if key == feedback.get_feedback_id() and value != '' %}
+                  <div class="btn fb-download">
+                    <a href="{{ url_for('download_file2', name=value ) }}" target="_blank" rel="noreferrer noopener" class="fb-download">Download</a>
+                  </div>
+                {% endif %}
+              {% endfor %}
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

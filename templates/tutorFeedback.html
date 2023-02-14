@@ -1,0 +1,232 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Tutor Feedback{% endblock %}
+{% block navbar %}
+{% include 'includes/_Tnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/feedback.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex justify-content-center mt-5">
+  <div class="col-lg-8">
+    <div class="feedback-bg px-5 py-3">
+      <form method="POST" action="" enctype="multipart/form-data" class="px-5 mx-3 py-3">
+        <h1 class="display-4 feedback-title">Create Feedbacks</h1>
+        <div class="form-group subject-field">
+          {{ render_field(form.feedback_subject, class="form-control sf-data") }}
+        </div>
+        <div class="form-group title-field">
+          {{ render_field(form.feedback_title, class="form-control tf-data") }}
+        </div>
+        <div id="prof">
+          <div class="form-group">
+            {{ render_field(form.feedback_description, class="form-control descf-data") }}
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="white-space: nowrap;">Upload Files (Optional)</label>
+          <input type="file" name="file2" accept="image/*">
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="row g-0">
+          <div class="col-lg-6">
+          </div>
+          <div class="col-lg-6 d-flex justify-content-end align-items-center">
+            <input type="submit" value="Submit" class="btn btn-primary mt-3"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="mt-5">
+      <ul class="nav nav-tabs">
+        <li class="nav-item">
+          <a class="nav-link active weird-nav-link" data-bs-toggle="tab" href="#MyFb">My Feedback</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link weird-nav-link" data-bs-toggle="tab" href="#StudentFb">Student Feedback</a>
+        </li>
+      </ul>
+      <div class="tab-content weird-nav">
+        <div class="tab-pane container-fluid active px-5" id="MyFb">
+          <br>
+          <h2>My Feedback</h2>
+          <br>
+          <div>
+            {% if Tcount == 0 %}
+            <p>There are no feedback from you</p>
+            {% elif Tcount == 1 %}
+            <p>There is 1 feedback from you</p>
+            {% else %}
+            <p>There are {{ Tcount }} feedbacks from you</p>
+            {% endif %}
+          </div>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Feedback Date</th>
+              <th>Feedback Name</th>
+              <th>Admin ID</th>
+              <th>Feedback Subject</th>
+              <th>Feedback Title</th>
+              <th>Feedback Description</th>
+              <th>Attachments</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for j in Tfeedback_list %}
+            <tr>
+              <td>{{ j.get_feedback_date() }}</td>
+              <td>{{ j.get_feedback_name() }}</td>
+              <td>{{ j.get_feedback_adminid() }}</td>
+              <td>{{ j.get_feedback_subject() }}</td>
+              <td>{{ j.get_feedback_title() }}</td>
+              <td>{{ j.get_feedback_description() }}</td>
+              <td>
+                {% for key, value in file_dict.items() %}
+                {% if key == j.get_feedback_id() and value != '' %}
+                <div class="btn fb-download">
+                  <a href="{{ url_for('download_file2', name=value ) }}" target="_blank"
+                     rel="noreferrer noopener" class="fb-download">Download</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </td>
+              <td>
+                <form action="{{url_for('t_delete_feedback', id=j.get_feedback_id())}}" method="POST">
+                  <!-- Button to Open the Modal -->
+                  <a type="button" class="btn" data-bs-toggle="modal"
+                     data-bs-target="#myModal_{{j.get_feedback_id()}}">
+                    <i class="bi bi-trash3-fill fb-delete"></i>
+                  </a>
+                  <!-- The Modal -->
+                  <div class="modal" id="myModal_{{j.get_feedback_id()}}">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Delete Confirmation</h4>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                          <div class="modal-body">
+                            Are you sure you want to delete {{j.get_feedback_title()}}?
+                          </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+        <div class="tab-pane container-fade px-5" id="StudentFb">
+          <br>
+          <h2>Students Feedback</h2>
+          <br>
+          <div>
+            {% if Scount == 0 %}
+            <p>There are no feedback from student</p>
+            {% elif Scount == 1 %}
+            <p>There is 1 feedback from studnet</p>
+            {% else %}
+            <p>There are {{ Scount }} feedbacks from students</p>
+            {% endif %}
+          </div>
+          <table class="table table-striped">
+            <thead>
+            <tr>
+              <th>Feedback Date</th>
+              <th>Feedback Name</th>
+              <th>Admin ID</th>
+              <th>Feedback Subject</th>
+              <th>Feedback Title</th>
+              <th>Feedback Description</th>
+              <th>Attachments</th>
+              <th>Delete</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for j in Sfeedback_list %}
+            <tr>
+              <td>{{ j.get_feedback_date() }}</td>
+              <td>{{ j.get_feedback_name() }}</td>
+              <td>{{ j.get_feedback_adminid() }}</td>
+              <td>{{ j.get_feedback_subject() }}</td>
+              <td>{{ j.get_feedback_title() }}</td>
+              <td>{{ j.get_feedback_description() }}</td>
+              <td>
+                {% for key, value in file_dict.items() %}
+                {% if key == j.get_feedback_id() and value != '' %}
+                <div class="btn fb-download">
+                  <a href="{{ url_for('download_file2', name=value ) }}" target="_blank"
+                     rel="noreferrer noopener" class="fb-download">Download</a>
+                </div>
+                {% endif %}
+                {% endfor %}
+              </td>
+              <td>
+                <form action="{{url_for('t_delete_feedback', id=j.get_feedback_id())}}" method="POST">
+                  <!-- Button to Open the Modal -->
+                  <a type="button" class="btn" data-bs-toggle="modal"
+                     data-bs-target="#studentmyModal_{{j.get_feedback_id()}}">
+                    <i class="bi bi-trash3-fill fb-delete"></i>
+                  </a>
+                  <!-- The Modal -->
+                  <div class="modal" id="studentmyModal_{{j.get_feedback_id()}}">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <!-- Modal Header -->
+                        <div class="modal-header">
+                          <h4 class="modal-title">Delete Confirmation</h4>
+                          <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+
+                        <!-- Modal body -->
+                        <div class="modal-body">
+                          <div class="modal-body">
+                            Are you sure you want to delete {{j.get_feedback_title()}}?
+                          </div>
+                        </div>
+                        <!-- Modal footer -->
+                        <div class="modal-footer">
+                          <input type="submit" value="Delete" class="btn btn-danger">
+                          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </td>
+            </tr>
+            {% endfor %}
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+{% endblock %}

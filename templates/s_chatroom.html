@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>EZ TUTORS</title>
+  <!--Link to CSS -->
+
+  <link href="/static/css/chatroom.css" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.2/dist/css/bootstrap.min.css"
+        integrity="sha384-xOolHFLEh07PJGoPkLv1IbcEPTNtaed2xpHsD9ESMhqIYd0nLMwNLD69Npy4HI+N" crossorigin="anonymous">
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+  <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.6.0/socket.io.js"></script>
+  <script type="text/javascript" charset="utf-8">
+            var socket;
+            $(document).ready(function(){
+                socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
+                socket.on('connect', function() {
+                    socket.emit('join', {});
+                });
+                socket.on('status', function(data) {
+                    $('#chat').val($('#chat').val() + '' + data.msg + '\n');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                socket.on('message', function(data) {
+                    $('#chat').val($('#chat').val() + data.msg + '\n');
+                    $('#chat').scrollTop($('#chat')[0].scrollHeight);
+                });
+                $('#send').click(function(e) {
+                        text = $('#text').val();
+                        $('#text').val('');
+                        socket.emit('text', {msg: text});
+                });
+            });
+            function leave_room() {
+                socket.emit('left', {}, function() {
+                    socket.disconnect();
+                    // go back to the login page
+                    window.location.href = "{{ url_for('retrieve_content') }}";
+                });
+            }
+
+  </script>
+</head>
+
+<body class="text-center mt-5">
+<div class="d-flex justify-content-center">
+  <div class="chatwindow cr-form">
+    <h2 class="cr-title">EZ - TUTORS CHAT</h2>
+    <h2 class="cr-title">Room : {{session['room']}}</h2><br>
+    <textarea id="chat" class="cr-input" rows="15" placeholder="No messages yet. Start one..."></textarea><br/><br/>
+    <input type="text" id="text" class="cr-input" placeholder="Enter your message here"/>
+    <div class="row g-0 justify-content-end">
+      <div class="col-lg-6">
+      </div>
+      <div class="col-lg-6 d-flex justify-content-end align-items-center mt-3">
+        <button type="button" id="send" class="btn btn-success mr-3">SEND</button>
+        <button type="button" class="btn btn-danger" onclick=leave_room()>Leave this Chat</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>
+</html>

@@ -1,0 +1,129 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Tutor Announcements{% endblock %}
+{% block navbar %}
+{% include 'includes/_Tnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/tutorannouncement.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex justify-content-center mt-5">
+  <div class="col-lg-8">
+    <div class="Ann-bg px-5 py-3">
+      <form method="POST" action="" enctype="multipart/form-data" class="px-5 mx-3 py-3">
+        <h1 class="display-4 Ann-title">Create Announcements</h1>
+        <div class="form-group title-field">
+          {{ render_field(form.atitle, class="form-control") }}
+        </div>
+        <div class="form-group content-field">
+          {{ render_field(form.acontent, class="form-control") }}
+        </div>
+        <div class="form-group">
+          <label>Upload Files (Optional)</label>
+          <input type="file" name="file" accept="image/*">
+        </div>
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+        <ul class=flashes>
+          {% for message in messages %}
+          <li>{{ message }}</li>
+          {% endfor %}
+        </ul>
+        {% endif %}
+        {% endwith %}
+        <div class="row g-0">
+          <div class="col-lg-6">
+          </div>
+          <div class="col-lg-6 d-flex justify-content-end align-items-center">
+            <input type="submit" value="Submit" class="btn btn-primary mt-3"/>
+          </div>
+        </div>
+      </form>
+    </div>
+    <div class="weird-nav mt-5">
+      <div class="container-fluid px-5 py-3">
+        <br/>
+        <h2>My Announcements</h2>
+        <br/>
+        <div>
+          {% if count == 0 %}
+          <p>You have not sent any announcements</p>
+          {% elif count == 1 %}
+          <p>You have sent 1 announcements</p>
+          {% else %}
+          <p>You have sent {{ count }} announcements.</p>
+          {% endif %}
+        </div>
+        <table class="table table-striped">
+          <thead>
+          <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Date Posted</th>
+            <th>Last Updated</th>
+            <th>Posted By</th>
+            <th>Attachments</th>
+          </tr>
+          </thead>
+          <tbody>
+          {% for announce in ann_list %}
+          <tr>
+            <td>{{ announce.get_title() }}</td>
+            <td>{{ announce.get_content() }}</td>
+            <td>{{ announce.get_date() }}</td>
+            <td>{{ announce.get_update() }}</td>
+            <td>{{ announce.get_id_num() }}</td>
+            <td>
+              {% for key, value in file_dict.items() %}
+              {% if key == announce.get_ann_id() and value != '' %}
+              <div class="btn Ann-download">
+                <a href="{{ url_for('download_file', name=value ) }}" target="_blank" rel="noreferrer noopener" class="Ann-download">Download</a>
+              </div>
+              {% endif %}
+              {% endfor %}
+            </td>
+            <td>
+              <a href="/updateTutorAnnouncement/{{announce.get_ann_id()}}" class="btn">
+                <i class="bi bi-pencil-square Ann-update"></i>
+              </a>
+            </td>
+            <td>
+              <form action="{{url_for('t_delete_announcement', id=announce.get_ann_id())}}" method="POST">
+
+                <button type="button" class="btn" data-bs-toggle="modal"
+                        data-bs-target="#myModal_{{announce.get_ann_id()}}">
+                   <i class="bi bi-trash3-fill Ann-delete"></i>
+                </button>
+                <!-- The Modal -->
+                <div class="modal" id="myModal_{{announce.get_ann_id()}}">
+                  <div class="modal-dialog">
+                    <div class="modal-content">
+                      <!-- Modal Header -->
+                      <div class="modal-header">
+                        <h4 class="modal-title">Delete Confirmation</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                      </div>
+                      <!-- Modal body -->
+                      <div class="modal-body">
+                        Are you sure you want to delete {{announce.get_title()}}?
+                      </div>
+                      <!-- Modal footer -->
+                      <div class="modal-footer">
+                        <input type="submit" value="Delete" class="btn btn-danger">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %}

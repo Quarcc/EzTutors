@@ -1,0 +1,75 @@
+body{
+    background: #f1f1f1;
+}
+.weird-nav{
+    background: #D3D3D3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.Ann-bg{
+    background: #D3D3D3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+.Ann-title{
+    font-weight: 500;
+}
+.content-field, .title-field{
+    margin: 5px 0;
+}
+#acontent, #atitle{
+    background: #fff;
+    color: #525865;
+    border-radius: 4px;
+    border: 1px solid #d1d1d1;
+    box-shadow: inset 0px 1px 8px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    font-size: 1em;
+    line-height: 1.45em;
+    outline: none;
+    -webkit-transition: .18s ease-out;
+    -moz-transition: .18s ease-out;
+    -o-transition: .18s ease-out;
+    transition: .18s ease-out;
+}
+#acontent:hover, #atitle:hover{
+    box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.02);
+}
+#atitle:focus, #acontent:focus{
+    color: #4b515d;
+    border: 1px solid #B8B6B6;
+    box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+label{
+    width: 250px;
+    font-size: 20px;
+    margin: 5px 0;
+}
+.Ann-update{
+    font-size: 25px;
+}
+.Ann-update:hover{
+    color: #ffc107;
+    transition: 0.3s ease;
+}
+.Ann-delete{
+    font-size: 25px;
+    color: black
+}
+.Ann-delete:hover{
+    color: red;
+    transition: 0.3s ease;
+}
+.Ann-download{
+    text-decoration: none;
+    color: black;
+    background: #58D68D;
+}
+.Ann-download:hover{
+    text-decoration: none;
+    color: black;
+    background: #58D68D;
+    transform: scale(1.1);
+    transition: 0.3s ease;
+}

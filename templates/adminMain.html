@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block jquqery %}
+{% endblock %}
+{% block title %}EzTutors - Admin Main{% endblock %}
+{% block navbar %}
+{% include 'includes/_Adminnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/adminmain.css') }}">
+{% endblock %}
+{% from "includes/_formHelper.html" import render_field %}
+{% block content %}
+<div class="container-fluid">
+    <div class="row g-0">
+        <div class="col-lg-6 my-auto">
+            <div class="col-lg-10 mx-auto mt-4 pb-2 bg">
+                <div class="col-lg-11 mx-auto">
+                    <h2 class="adminsubheader">TO-DO LIST</h2>
+                    <div class="todolist mb-4">
+                        <div class="p-3">
+                        {% if todo_num == 0 %}
+                            <h4><u>There are no To-Do items</u></h4>
+                            <hr>
+                        {% elif todo_num == 1 %}
+                            <h4><u>There is 1 To-Do item</u></h4>
+                            <hr>
+                        {% else %}
+                            <h4><u>There are {{ todo_num }} To-Do items</u></h4>
+                            <hr>
+                        {% endif %}
+                        {% for i in todo %}
+                            <div class="row g-0">
+                                <div class="col-lg-10">
+                                    <h4 class="d-flex align-items-center"><i class="bi bi-circle-fill" style="color: black; font-size: 8px;"></i>&nbsp{{ i.get_todo_text() }}</h4>
+                                    <p style="font-size: 15px;">Posted on: {{ i.get_todo_date() }}</p>
+                                </div>
+                                <div class="col-lg-2">
+                                <form action="{{url_for('delete_todo', todo_id=i.get_todo_id())}}" method="POST">
+                                <!-- Button to Open the Modal -->
+                                    <button type="button" class="btn delete-button" data-bs-toggle="modal" data-bs-target="#myModal_{{i.get_todo_id()}}">
+                                        <i class="bi bi-trash3-fill"></i>
+                                    </button>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="myModal_{{i.get_todo_id()}}">
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Confirmation</h4>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete To-Do item for<br>
+                                                    <h5>{{i.get_todo_text()}}</h5>
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                                </div>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                    <div class="add-field">
+                        <div class="d-flex justify-content-start align-items-center">
+                            <form action="" method="POST">
+                                <div class="d-flex">
+                                    {{render_field(todo_createform.text, class='form-control')}}
+                                    <button type="submit" class="btn add-button">
+                                        <i class="bi bi-plus-circle-fill add-button ps-2"></i>
+                                    </button>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-10 mx-auto mt-4 pb-2 bg">
+                <div class="col-lg-11 mx-auto">
+                    <div class="d-flex">
+                    <h2 class="adminsubheader">ANNOUNCEMENTS</h2>
+                        <a href="/adminAnnouncement" class="add-button">
+                            <i class="bi bi-plus-circle-fill add-button ps-2"></i>
+                        </a>
+                    </div>
+                    <div class="announcements mb-4">
+                        <div class="p-3">
+                        {% if announce_num == 0 %}
+                            <h4><u>There are no Announcements</u></h4>
+                            <hr>
+                        {% elif announce_num == 1 %}
+                            <h4><u>There is 1 Announcement</u></h4>
+                            <hr>
+                        {% else %}
+                            <h4><u>There are {{ announce_num }} Announcements</u></h4>
+                            <hr>
+                        {% endif %}
+                            {% for i in announce %}
+                            <div class="row g-0">
+                                <div class="col-lg-10">
+                                    <h4 class="d-flex align-items-center">{{ i.get_title() }}</h4>
+                                    <p style="font-size: 15px;">Posted on {{ i.get_date() }} <br>
+                                        by
+                                        {% for key, value in user_dict.items() %}
+                                        {% if key == i.get_id_num() %}
+                                            <u>{{ value }}</u>
+                                        {% endif %}
+                                        {% endfor %}
+                                    </p>
+                                    <p>{{ i.get_content() }}</p>
+                                    {% for key, value in file_dict.items() %}
+                                    {% if key == i.get_ann_id() and value != '' %}
+                                    <p>Click <a href="{{url_for('download_file', name=value)}}" target="+blank"
+                                       rel="noreferrer noopener">here</a> to download</p>
+                                    {% endif %}
+                                    {% endfor %}
+                                    {% if i.get_update() != None %}
+                                    <p style="font-size: 12px;">Last Updated: {{ i.get_update() }}</p>
+                                    {% endif %}
+                                </div>
+                                <div class="col-lg-2">
+                                    <form action="{{url_for('a_delete_announcement', ann_id=i.get_ann_id())}}" method="POST">
+                                        <!-- Button to Open the Modal -->
+                                        <a type="button" class="btn delete-button" data-bs-toggle="modal"
+                                                data-bs-target="#myModal_{{i.get_ann_id()}}">
+                                            <i class="bi bi-trash3-fill delete-button"></i>
+                                        </a>
+
+                                        <!-- The Modal -->
+                                        <div class="modal" id="myModal_{{i.get_ann_id()}}">
+                                            <div class="modal-dialog">
+
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                                        <button type="button" class="btn-close"
+                                                                data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete Announcement:<br>
+                                                        <h5>{{i.get_title()}}</h5><p> by {{ i.get_id_num() }}</p>
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                                        <button type="button" class="btn btn-secondary"
+                                                                data-bs-dismiss="modal">Cancel
+                                                        </button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <a href="/updateAdminAnnouncement/{{i.get_ann_id()}}" class="btn edit-button">
+                                        <i class="bi bi-pencil-square edit-button"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <hr>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-6">
+            <div class="col-lg-10 mx-auto mt-4 pb-2 bg">
+                <div class="col-lg-11 mx-auto">
+                    <h1 class="adminsubheader">FEEDBACK ALERTS</h1>
+                    <div class="feedbackalert mb-4">
+                        <div class="p-3">
+                        {% if feedback_num == 0 %}
+                            <h4><u>There are no feedbacks</u></h4>
+                            <hr>
+                        {% elif feedback_num == 1 %}
+                            <h4><u>There is 1 feedback</u></h4>
+                            <hr>
+                        {% else %}
+                            <h4><u>There are {{ feedback_num }} feedbacks</u></h4>
+                            <hr>
+                        {% endif %}
+                        {% for i in feedback %}
+                            <div class="row g-0">
+                                <div class="col-lg-10">
+                                    <h3>{{ i.get_feedback_subject() }}</h3>
+                                    <p>{{ i.get_feedback_date() }}</p>
+                                    <p style="font-size: 20px;">{{ i.get_feedback_title() }}</p>
+                                </div>
+                                <div class="col-lg-2">
+                                    <form action="{{url_for('a_delete_feedback', feedback_id=i.get_feedback_id())}}" method="POST">
+                                    <!-- Button to Open the Modal -->
+                                        <a type="button" class="btn delete-button" data-bs-toggle="modal" data-bs-target="#myModal_{{i.get_feedback_id()}}">
+                                            <i class="bi bi-trash3-fill"></i>
+                                        </a>
+
+                                        <!-- The Modal -->
+                                        <div class="modal" id="myModal_{{i.get_feedback_id()}}">
+                                            <div class="modal-dialog">
+
+                                                <div class="modal-content">
+
+                                                    <!-- Modal Header -->
+                                                    <div class="modal-header">
+                                                        <h4 class="modal-title">Delete Confirmation</h4>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                                                    </div>
+
+                                                    <!-- Modal body -->
+                                                    <div class="modal-body">
+                                                        Are you sure you want to delete notification:<br>
+                                                        <h5>{{i.get_feedback_subject()}}: {{i.get_feedback_title()}}?</h5>
+                                                    </div>
+
+                                                    <!-- Modal footer -->
+                                                    <div class="modal-footer">
+                                                        <input type="submit" value="Delete" class="btn btn-danger">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                            <hr>
+                        {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,89 @@
+body{
+    background: #F1F1F1;
+}
+
+.weird-nav{
+    background: #D3D3D3;
+    border-radius: 0px 0px 10px 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.weird-nav-link{
+    color: #9a9a9a;
+    font-weight: 600;
+}
+
+.weird-nav-link:hover{
+    color: black;
+    transition: 0.3s ease;
+}
+
+.form-bg{
+    background: #D3D3D3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.form-group{
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+#atitle, #acontent{
+    background: #fff;
+    color: #525865;
+    border-radius: 4px;
+    border: 1px solid #d1d1d1;
+    box-shadow: inset 0px 1px 8px rgba(0, 0, 0, 0.2);
+    font-family: inherit;
+    font-size: 1em;
+    line-height: 1.45;
+    outline: none;
+    padding: 0.6em 1.45em 0.7em;
+    -webkit-transition: .18s ease-out;
+    -moz-transition: .18s ease-out;
+    -o-transition: .18s ease-out;
+    transition: .18s ease-out;
+}
+
+#atitle:hover, #acontent:hover{
+  box-shadow: inset 1px 2px 8px rgba(0, 0, 0, 0.02);
+}
+
+#atitle:focus, #acontent:focus{
+  color: #4b515d;
+  border: 1px solid #B8B6B6;
+  box-shadow: inset 1px 2px 4px rgba(0, 0, 0, 0.01), 0px 0px 8px rgba(0, 0, 0, 0.2);
+}
+
+.delete-button{
+    font-size: 20px;
+}
+
+.delete-button:hover{
+    color: red;
+    transition: 0.3s ease;
+}
+
+.edit-button{
+    font-size: 20px;
+}
+
+.edit-button:hover{
+    color: #ffc107;
+    transition: 0.3s ease;
+}
+
+.download{
+    text-decoration: none;
+    color: black;
+    background: #58D68D;
+}
+
+.download:hover{
+    text-decoration: none;
+    color: black;
+    background: #58D68D;
+    transform: scale(1.1);
+    transition: 0.3s ease;
+}

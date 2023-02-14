@@ -1,0 +1,44 @@
+body{
+    background: #F1F1F1;
+}
+
+.account-bg{
+    background: #d3d3d3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.list-bg{
+    background: #F1F1F1;
+    border: 1px solid black;
+    height: 75vh;
+    overflow: auto;
+}
+
+.delete-button{
+    font-size: 20px;
+}
+
+.delete-button:hover{
+    color: red;
+    transition: 0.3s ease;
+}
+
+.edit-button{
+    font-size: 20px;
+}
+
+.edit-button:hover{
+    color: #ffc107;
+    transition: 0.3s ease;
+}
+
+.add-account{
+    background: #FFC1E0;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.add-account a{
+    text-decoration: none;
+    color: black;
+}

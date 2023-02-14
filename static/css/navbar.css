@@ -1,0 +1,33 @@
+.navlogo{
+    max-width: 50px;
+    max-height: 50px;
+    margin: 0 10px 0 10px;
+}
+
+.userlogo{
+    max-width: 50px;
+    max-height: 50px;
+    min-width: 50px;
+    min-height: 50px;
+    object-fit: cover;
+    margin: 0 10px 0 10px;
+    border: 1px solid black;
+}
+.Tnavbar{
+    font-size: 20px;
+    margin: 10px
+}
+
+#username{
+    font-size: 20px;
+}
+
+#navbarlogo{
+    font-size: 30px;
+    font-weight: 500;
+}
+
+#navbarlogo img{
+    max-width: 60px;
+    max-height: 60px;
+}

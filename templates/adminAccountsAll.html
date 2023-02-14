@@ -1,0 +1,252 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Admin Accounts(All){% endblock %}
+{% block navbar %}
+{% include 'includes/_Adminnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/adminaccount.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div>
+    <a href="/adminAccounts" class="return"><i class="bi bi-arrow-left"></i></a>
+</div>
+<div class="d-flex justify-content-center">
+    <div class="col-lg-11">
+        <div class="mt-5">
+            <ul class="nav nav-tabs">
+                <li class="nav-item">
+                    <a class="nav-link active weird-nav-link" data-bs-toggle="tab" href="#Student">Student Accounts</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link weird-nav-link" data-bs-toggle="tab" href="#Tutor">Tutor Accounts</a>
+                </li>
+            </ul>
+            <div class="tab-content weird-nav">
+                <div class="tab-pane container-fluid active px-5" id="Student">
+                    <br>
+                    <h2>Student Accounts</h2>
+                    <br>
+                    <div>
+                        {% if count_student == 0 %}
+                        <p>There are no student accounts</p>
+                        {% elif count_student == 1 %}
+                        <p>There is 1 student account/p>
+                        {% else %}
+                        <p>There are {{ count_student }} student accounts</p>
+                        {% endif %}
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Profile Picture</th>
+                            <th>Identification Number</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Password</th>
+                            <th>Mobile Number</th>
+                            <th>Email</th>
+                            <th>Education Level</th>
+                            <th>Class</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if count_student != 0 %}
+                        {% for i in student_data %}
+                        <tr>
+                            <td><img src="{{url_for('static', filename='profile_pics/'+i.student_img)}}" style="max-width:50px; max-height:50px; min-width:50px; min-height:50px; object-fit:cover;" alt=""></td>
+                            <td>{{ i.student_id_num }}</td>
+                            <td>{{ i.student_first_name }}</td>
+                            <td>{{ i.student_last_name }}</td>
+                            <td>{{ i.student_password }}</td>
+                            <td>{{ i.student_email }}</td>
+                            <td>{{ i.student_mobile }}</td>
+                            <td>{{ i.student_education_level }}</td>
+                            {% for key, value in student_class_dict.items() %}
+                            {% if key == i.student_id_num %}
+                            <td>{{ value }}</td>
+                            {% endif %}
+                            {% endfor %}
+                            <td>
+                                <a href="/adminUpdateAccounts/students/{{i.student_id_num}}" class="btn edit-button">
+                                    <i class="bi bi-pencil-square edit-button"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <form action="{{url_for('delete_student_account', student_id_num=i.student_id_num)}}"
+                                      method="POST">
+                                    <!-- Button to Open the Modal -->
+                                    <a type="button" class="btn delete-button" data-bs-toggle="modal"
+                                       data-bs-target="#myModal_{{i.student_id_num}}">
+                                        <i class="bi bi-trash3-fill delete-button"></i>
+                                    </a>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="myModal_{{i.student_id_num}}">
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Confirmation</h4>
+                                                    <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete {{i.student_first_name}}
+                                                    {{i.student_last_name}}'s Account?
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancel
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+                <div class="tab-pane container-fluid px-5" id="Tutor">
+                    <br>
+                    <h2>Tutor Accounts</h2>
+                    <br>
+                    <div>
+                        {% if count_tutor == 0 %}
+                        <p>There are no tutor accounts</p>
+                        {% elif count_tutor == 1 %}
+                        <p>There is 1 tutor account/p>
+                        {% else %}
+                        <p>There are {{ count_tutor }} tutor accounts</p>
+                        {% endif %}
+                    </div>
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Profile Picture</th>
+                            <th>Identification Number</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th>Password</th>
+                            <th>Age</th>
+                            <th>Mobile Number</th>
+                            <th>Email</th>
+                            <th>Teaching Level</th>
+                            <th>Class</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% if count_tutor != 0 %}
+                        {% for i in tutor_data %}
+                        <tr>
+                            <td><img src="{{url_for('static', filename='profile_pics/'+i.tutor_img)}}" style="max-width:50px; max-height:50px; min-width:50px; min-height:50px; object-fit:cover;" alt=""></td>
+                            <td>{{ i.tutor_id_num }}</td>
+                            <td>{{ i.tutor_first_name }}</td>
+                            <td>{{ i.tutor_last_name }}</td>
+                            <td>{{ i.tutor_password }}</td>
+                            <td>{{ i.tutor_age }}</td>
+                            <td>{{ i.tutor_email }}</td>
+                            <td>{{ i.tutor_mobile }}</td>
+                            {% for key, value in tutor_level_dict.items() %}
+                            {% if key == i.tutor_id_num %}
+                            <td>{{ value }}</td>
+                            {% endif %}
+                            {% endfor %}
+                            {% for key, value in tutor_class_dict.items() %}
+                            {% if key == i.tutor_id_num %}
+                            <td>{{ value }}</td>
+                            {% endif %}
+                            {% endfor %}
+                            <td>
+                                <a href="/adminUpdateAccounts/tutors/{{i.tutor_id_num}}" class="btn edit-button">
+                                    <i class="bi bi-pencil-square edit-button"></i>
+                                </a>
+                            </td>
+                            <td>
+                                <form action="{{url_for('delete_tutor_account', tutor_id_num=i.tutor_id_num)}}"
+                                      method="POST">
+                                    <!-- Button to Open the Modal -->
+                                    <a type="button" class="btn delete-button" data-bs-toggle="modal"
+                                       data-bs-target="#myModal_{{i.tutor_id_num}}">
+                                        <i class="bi bi-trash3-fill delete-button"></i>
+                                    </a>
+
+                                    <!-- The Modal -->
+                                    <div class="modal" id="myModal_{{i.tutor_id_num}}">
+                                        <div class="modal-dialog">
+
+                                            <div class="modal-content">
+
+                                                <!-- Modal Header -->
+                                                <div class="modal-header">
+                                                    <h4 class="modal-title">Delete Confirmation</h4>
+                                                    <button type="button" class="btn-close"
+                                                            data-bs-dismiss="modal"></button>
+                                                </div>
+
+                                                <!-- Modal body -->
+                                                <div class="modal-body">
+                                                    Are you sure you want to delete {{i.tutor_first_name}}
+                                                    {{i.tutor_last_name}}'s Account?
+                                                </div>
+
+                                                <!-- Modal footer -->
+                                                <div class="modal-footer">
+                                                    <input type="submit" value="Delete" class="btn btn-danger">
+                                                    <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Cancel
+                                                    </button>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                        {% else %}
+                        <tr>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                            <td></td>
+                        </tr>
+                        {% endif %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

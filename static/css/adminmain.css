@@ -1,0 +1,72 @@
+/* --------- Webpage CSS --------- */
+body{
+    background: #F1F1F1;
+}
+
+.feedbackalert{
+    background: #F1F1F1;
+    height: 75vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.todolist{
+    background: #F1F1F1;
+    height: 25vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.announcements{
+    background: #F1F1F1;
+    height: 35vh;
+    border: 1px solid black;
+    border-radius: 5px;
+    overflow: auto;
+}
+
+.bg{
+    background: #D3D3D3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.adminsubheader{
+    font-weight: 700;
+    text-decoration: underline;
+    letter-spacing: 5px;
+}
+
+.delete-button{
+    font-size: 25px;
+    float: right;
+}
+
+.delete-button:hover{
+    color: red;
+    transition: 0.3s ease;
+}
+
+.add-button{
+    font-size: 25px;
+    float: right;
+    text-decoration: none;
+    color: black;
+}
+
+.add-button:hover{
+    color: #0d6efd;
+    transition: 0.3s ease;
+}
+
+.edit-button{
+    font-size: 25px;
+    float: right;
+}
+
+.edit-button:hover{
+    color: #ffc107;
+    transition: 0.3s ease;
+}

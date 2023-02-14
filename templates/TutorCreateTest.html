@@ -1,0 +1,68 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Tutor Create Test{% endblock %}
+{% block navbar %}
+{% include 'includes/_Tnavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/test.css') }}">
+{% endblock %}
+{% block content %}
+{% from "includes/_formHelper.html" import render_field %}
+<div class="d-flex justify-content-center mt-5 ctest">
+  <div class="col-lg-8">
+    <div class="ctest-bg px-5 py-3 mx-5">
+      <div>
+        <form method="post" action="">
+          <h1 class="display-4 pt-2 ctest-title">Create Test</h1>
+          <div class="form-group ctest-id">
+            {{ render_field(form.content_id, class="form-control") }}
+          </div>
+
+          <div class="form-group ctest-sub">
+            {{ render_field(form.content_subject, class="form-control") }}
+          </div>
+
+          <div class="form-group ctest-mark">
+            {{ render_field(form.marks, class="form-control") }}
+          </div>
+
+          <div class="form-group ctest-q1">
+            {{ render_field(form.q1, class="form-control") }}
+          </div>
+
+          <div class="form-group ctest-a1">
+            {{ render_field(form.a1, class="form-control") }}
+          </div>
+
+          <div class="form-group ctest-q2">
+            {{ render_field(form.q2, class="form-control") }}
+          </div>
+          <br>
+          <div class="form-group ctest-a2">
+            {{ render_field(form.a2, class="form-control") }}
+          </div>
+          <br>
+          <div class="form-group ctest-q3">
+            {{ render_field(form.q3, class="form-control") }}
+          </div>
+          <br>
+          <div class="form-group ctest-a3">
+            {{ render_field(form.a3, class="form-control") }}
+          </div>
+          <div class="row g-0">
+            <div class="col-lg-6">
+            </div>
+            <div class="col-lg-6 d-flex justify-content-end align-items-center">
+              <input type="submit" value="Submit" class="btn btn-primary mt-3"/>
+            </div>
+          </div>
+
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+
+{% endblock %}

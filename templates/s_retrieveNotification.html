@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+{% block title %}EzTutors - Student Notifications{% endblock %}
+{% block navbar %}
+{% include 'includes/_Snavbar.html' %}
+{% endblock %}
+{% block links %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/studentnotification.css') }}">
+{% endblock %}
+{% block content %}
+<div class="d-flex justify-content-center mt-5">
+    <div class="col-lg-8">
+        <div class="rnotif">
+            <div class="container-fluid px-5 py-3 rnotif-bg">
+                <h2>My Notifications</h2>
+                <div>
+                    {% if count == 0 %}
+                    <p>There are no notification</p>
+                    {% elif count == 1 %}
+                    <p>There is 1 notification</p>
+                    {% else %}
+                    <p>There are {{ count }} notifications</p>
+                    {% endif %}
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>Sender</th>
+                            <th>Upload Date</th>
+                            <th>Title</th>
+                            <th>Description</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        {% for notif in notification_list %}
+                        <tr>
+                            {% for key, value in sender_dict.items() %}
+                            {% if key == notif.get_sender() %}
+                            <td> {{value}}</td>
+                            {% endif %}
+                            {% endfor %}
+                            <td>{{ notif.get_upload_date() }}</td>
+                            <td>{{ notif.get_title() }}</td>
+                            <td>{{ notif.get_description() }}</td>
+
+                        </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+

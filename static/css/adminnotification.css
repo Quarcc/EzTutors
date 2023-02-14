@@ -1,0 +1,44 @@
+.notif-bg, .account-bg{
+    background: #D3D3D3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.list-bg{
+    background: #F1F1F1;
+    height: 50vh;
+    border: 1px solid black;
+    overflow: auto;
+}
+
+.table-bg{
+    background: #D3D3D3;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+label{
+    margin-top: 30px;
+}
+
+#target_user, #title, #description{
+    margin-top: 10px;
+}
+
+.delete-button{
+    font-size: 20px;
+}
+
+.delete-button:hover{
+    color: red;
+    transition: 0.3s ease;
+}
+
+.edit-button{
+    font-size: 20px;
+}
+
+.edit-button:hover{
+    color: #ffc107;
+    transition: 0.3s ease;
+}
